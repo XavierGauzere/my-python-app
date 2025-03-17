@@ -8,4 +8,5 @@ def multiply(x, y):
 
 class MyClass:
     def __init__(self):
-        self.value = 0  # Avertissement : espace manquant autour de l'opérateur '='
+        self.value = 0  # Avertissement : espace manquant autour
+        # de l'opérateur '='

@@ -25,7 +25,6 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install pytest
           pip install -r requirements.txt || true
 
       - name: Exécuter les tests
@@ -37,3 +36,4 @@ jobs:
         uses: py-actions/flake8@v2
         with:
           path: "."
+          exclude: "venv"
