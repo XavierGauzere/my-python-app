@@ -1,9 +1,9 @@
-name: Python CI
+name: CI/CD Documentation Deployment
 
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
       - main
@@ -11,29 +11,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout du code
         uses: actions/checkout@v3
-      
+
       - name: Installer Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Installer les dépendances
         run: |
-          python -m venv venv
-          source venv/bin/activate
-          pip install -r requirements.txt || true
+          pip install pdoc pytest
 
       - name: Exécuter les tests
         run: |
-          source venv/bin/activate
           pytest
 
-      - name: Vérifier la qualité du code avec Flake8
-        uses: py-actions/flake8@v2
+      - name: Générer la documentation
+        run: |
+          pdoc main.py -o docs
+
+      - name: Déployer sur GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          path: "."
-          exclude: "venv"
+          branch: gh-pages
+          folder: docs
